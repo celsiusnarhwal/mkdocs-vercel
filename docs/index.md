@@ -46,7 +46,7 @@ vercel link
 
 After following the interactive prompts, a `.vercel` folder will appear in your project's directory.
 Inside that folder is a `project.json` file with a `projectId` property and an `orgId` property. Add the values of
-these properties as secrets in your projects GitHub repository under the names `VERCEL_PROJECT_ID` and `VERCEL_ORG_ID`,
+these properties as secrets in your project's GitHub repository under the names `VERCEL_PROJECT_ID` and `VERCEL_ORG_ID`,
 respectively.
 
 You can do this on GitHub.com or with the GitHub CLI:
