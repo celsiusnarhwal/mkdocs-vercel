@@ -87,16 +87,16 @@ docs/code/example.yml
 
 1.  To create a production deployment, tack on the `--prod` flag:
 
-        ```bash
-        npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} --prod
-        ```
+    ```bash
+    npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} --prod
+    ```
 
     To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
     (replacing `main` with your production branch if necessary):
 
-        ```bash
-        npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod'||'' }}
-        ```
+    ```bash
+    npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod'||'' }}
+    ```
 
 That's it. Your site will now be deployed to Vercel on every push that changes the contents of the `docs` folder or
 `mkdocs.yml`.
