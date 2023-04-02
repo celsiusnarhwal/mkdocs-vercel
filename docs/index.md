@@ -99,6 +99,6 @@ docs/code/example.yml
     ```
 
 That's it. Your site will now be deployed to Vercel on every push that changes the contents of the `docs` folder,
-`mkdocs.yml`, or anything you choose to specify in `on.push.paths`.
+`mkdocs.yml`, or anything else you choose to specify in `on.push.paths`.
 
 You can check out a fully-functioning example workflow at [this website's repository](https://github.com/celsiusnarhwal/mkdocs-vercel/blob/main/.github/workflows/docs.yml).
