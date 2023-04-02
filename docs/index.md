@@ -70,7 +70,8 @@ You can do this on GitHub.com or with the GitHub CLI:
 
 You'll need to generate a Vercel token so the Vercel CLI can access your account from within GitHub Actions. Head over
 to your [Vercel account settings](https://vercel.com/account/tokens), choose a name, appropriate scope, and expiration
-date for your token, and click "Create". Copy the token and set it as a repository secret under the name `VERCEL_TOKEN`.
+date for your token, and click **Create**. Copy the token and set it as a repository secret under the name
+`VERCEL_TOKEN`.
 
 ## Writing the Workflow
 
