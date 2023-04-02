@@ -1,0 +1,43 @@
+[tool.poetry]
+name = "material-vercel"
+version = "0.1.0"
+description = ""
+authors = ["celsius narhwal <hello@celsiusnarhwal.dev>"]
+readme = "README.md"
+packages = [{ include = "material_vercel" }]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+[tool.poetry.group.docs.dependencies]
+poethepoet = "^0.19.0"
+mkdocs-material = { git = "https://github.com/squidfunk/mkdocs-material-insiders" }
+
+[tool.poe.tasks]
+clear = "rm -rf site .cache"
+
+[tool.poe.tasks.docs]
+shell = """
+if $vercel; then
+    mkdocs build && vercel dev --cwd site
+else
+    mkdocs serve
+fi
+"""
+
+    [[tool.poe.tasks.docs.args]]
+    name = "vercel"
+    options = ["--vercel"]
+    type = "boolean"
+    default = false
+
+[tool.poe.tasks.fontawesome]
+shell = """
+npm i --no-save @celsiusnarhwal/fontawesome
+mv node_modules/@celsiusnarhwal/fontawesome/svgs docs/.overrides/.icons/fontawesome
+rm -rf node_modules
+"""
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

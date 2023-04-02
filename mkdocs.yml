@@ -1,0 +1,132 @@
+# Metadata
+site_name: Material for MkDocs + Vercel
+site_url: https://material.celsiusnarhwal.dev
+site_author: celsius narhwal
+
+# Repository
+repo_name: celsiusnarhwal/material-vercel
+repo_url: https://github.com/celsiusnarhwal/material-vercel
+
+# Navigation
+nav:
+  - Guide: index.md
+  - License: license.md
+
+# Material for MkDocs
+theme:
+  name: material
+  custom_dir: docs/.overrides
+  features:
+    - announce.dismiss
+    - content.code.annotate
+    - content.code.copy
+    - content.code.select
+    - content.tabs.link
+    - content.tooltips
+    - navigation.footer
+    - navigation.indexes
+    - navigation.sections
+    - navigation.top
+    - navigation.tabs
+    - navigation.tracking
+    - navigation.path
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+    - toc.integrate
+  palette:
+    - scheme: slate
+      toggle:
+        icon: light-mode
+        name: Step into the light
+
+    - scheme: indigo
+      primary: white
+      toggle:
+        icon: dark-mode
+        name: Embrace the dark
+  font:
+    text: Roboto
+    code: Roboto Mono
+  favicon: simple/vercel
+  logo: simple/vercel
+  icon:
+    repo: fontawesome/brands/github
+    admonition:
+      note: fontawesome/solid/notes
+      tip: material/lightbulb-on
+      danger: material/fire
+
+# Plugins
+plugins:
+  - search:
+      separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
+  - typeset
+
+# Extensions
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      options:
+        custom_icons:
+          - docs/.overrides/.icons
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink:
+      repo_url_shorthand: true
+      user: celsiusnarhwal
+      repo: 3515.games
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tilde
+  - pymdownx.snippets
+
+# Additional Settings
+extra:
+  annotate:
+    dockerfile: [.s2]
+    docker: [.s2]
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/celsiusnarhwal
+      name: github.com/celsiusnarhwal
+    - icon: fontawesome/brands/twitter
+      link: https://twitter.com/celsiusnarhwal
+      name: "@celsiusnarhwal"
+    - icon: fontawesome/solid/envelope
+      link: mailto:hello@celsiusnarhwal.dev
+      name: Report a Bug
+    - icon: celsius
+      link: https://celsiusnarhwal.dev
+      name: celsiusnarhwal.dev
+
+# JavaScript
+extra_javascript:
+  - https://kit.fontawesome.com/2273b2767b.js
