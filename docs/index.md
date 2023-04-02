@@ -74,7 +74,7 @@ date for your token, and click "Create". Copy the token and set it as a reposito
 
 ## Writing the Workflow
 
-Finally, you needt to write a GitHub Actions workflow that builds your documentation and deploys it to Vercel.
+Finally, you need to write a GitHub Actions workflow that builds your documentation and deploys it to Vercel.
 You have practically infinite flexibility in how this workflow looks, but it should probably contain the following
 at a minimum:
 
