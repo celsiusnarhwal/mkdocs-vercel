@@ -1,10 +1,9 @@
 [tool.poetry]
 name = "material-vercel"
-version = "0.1.0"
+version = "1.0.0"
 description = ""
 authors = ["celsius narhwal <hello@celsiusnarhwal.dev>"]
 readme = "README.md"
-packages = [{ include = "material_vercel" }]
 
 [tool.poetry.dependencies]
 python = "^3.11"

@@ -1,16 +1,15 @@
 # Metadata
-site_name: Material for MkDocs + Vercel
-site_url: https://material.celsiusnarhwal.dev
+site_name: MkDocs + Vercel
+site_url: https://mkdocs.celsiusnarhwal.dev
 site_author: celsius narhwal
 
 # Repository
-repo_name: celsiusnarhwal/material-vercel
-repo_url: https://github.com/celsiusnarhwal/material-vercel
+repo_name: celsiusnarhwal/mkdocs-vercel
+repo_url: https://github.com/celsiusnarhwal/mkdocs-vercel
 
 # Navigation
 nav:
   - Guide: index.md
-  - License: license.md
 
 # Material for MkDocs
 theme:
@@ -27,7 +26,6 @@ theme:
     - navigation.indexes
     - navigation.sections
     - navigation.top
-    - navigation.tabs
     - navigation.tracking
     - navigation.path
     - search.highlight
@@ -37,6 +35,7 @@ theme:
     - toc.integrate
   palette:
     - scheme: slate
+      primary: black
       toggle:
         icon: light-mode
         name: Step into the light
@@ -50,8 +49,8 @@ theme:
     text: Roboto
     code: Roboto Mono
   favicon: simple/vercel
-  logo: simple/vercel
   icon:
+    logo: simple/vercel
     repo: fontawesome/brands/github
     admonition:
       note: fontawesome/solid/notes
