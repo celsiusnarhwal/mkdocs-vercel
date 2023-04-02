@@ -97,7 +97,8 @@ docs/code/example.yml
         npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod'||'' }}
         ```
 
-That's it. Your site will now be deployed to Vercel on every push.
+That's it. Your site will now be deployed to Vercel on every push that changes the contents of the `docs` folder or
+`mkdocs.yml`.
 
 [My](https://3515.games) [own](https://restagainsthumanity.com) [MkDocs](https://pekora.celsiusnarhwal.dev) [sites](https://celsiusnarhwal.dev), including this one, are all deployed this way.
 You can check out a fully-functioning example workflow at [this website's repository](https://github.com/celsiusnarhwal/mkdocs-vercel/blob/main/.github/workflows/docs.yml).
