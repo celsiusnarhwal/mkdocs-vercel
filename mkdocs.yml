@@ -94,7 +94,7 @@ markdown_extensions:
   - pymdownx.magiclink:
       repo_url_shorthand: true
       user: celsiusnarhwal
-      repo: 3515.games
+      repo: mkdocs-vercel
   - pymdownx.mark
   - pymdownx.smartsymbols
   - pymdownx.superfences:
