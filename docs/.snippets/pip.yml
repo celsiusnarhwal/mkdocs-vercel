@@ -28,7 +28,7 @@ jobs:
         run: mkdocs build
 
       - name: Deploy to Vercel
-        uses: npx vercel --yes --token ${{ secrets.VERCEL_TOKEN }} # (1)!
+        uses: npx vercel --token ${{ secrets.VERCEL_TOKEN }} # (1)!
         working-directory: site
         env:  # (2)!
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
