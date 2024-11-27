@@ -34,17 +34,15 @@ theme:
     - toc.follow
     - toc.integrate
   palette:
-    - scheme: slate
-      primary: black
-      toggle:
-        icon: light-mode
-        name: Step into the light
+    - media: "(prefers-color-scheme)"
 
-    - scheme: indigo
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: indigo
       primary: white
-      toggle:
-        icon: dark-mode
-        name: Embrace the dark
   font:
     text: Roboto
     code: Roboto Mono
@@ -62,6 +60,11 @@ plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - typeset
+  - iconoclast:
+      css: true
+      uv: true
+      auto: true
+  - artwall
 
 # Extensions
 markdown_extensions:
@@ -80,11 +83,8 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.details
   - pymdownx.emoji:
-      emoji_generator: !!python/name:materialx.emoji.to_svg
-      emoji_index: !!python/name:materialx.emoji.twemoji
-      options:
-        custom_icons:
-          - docs/.overrides/.icons
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -109,23 +109,17 @@ markdown_extensions:
 
 # Additional Settings
 extra:
-  annotate:
-    dockerfile: [.s2]
-    docker: [.s2]
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/celsiusnarhwal
       name: github.com/celsiusnarhwal
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/celsiusnarhwal
-      name: "@celsiusnarhwal"
+    - icon: simple/bluesky
+      link: https://bsky.app/profile/celsiusnarhwal.dev
+      name: bsky.app/profile/celsiusnarhwal.dev
     - icon: fontawesome/solid/envelope
       link: mailto:hello@celsiusnarhwal.dev
-      name: Report a Bug
+      name: hello@celsiusnarhwal.dev
     - icon: celsius
       link: https://celsiusnarhwal.dev
       name: celsiusnarhwal.dev
-
-# JavaScript
-extra_javascript:
-  - https://kit.fontawesome.com/2273b2767b.js
+  generator: false

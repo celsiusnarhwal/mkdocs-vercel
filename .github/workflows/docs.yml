@@ -1,4 +1,4 @@
-name: Publish Documentation
+name: Deploy Documentation
 
 on:
   push:
@@ -10,58 +10,39 @@ on:
 
   workflow_dispatch:
 
+
 jobs:
-  build:
-    name: Build Documentation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-
-      - name: Set Up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11.1
-
-      - name: Install Poetry
-        run: pipx install poetry==1.4.1
-
-      - name: Save Cache
-        uses: actions/cache@v3
-        with:
-          key: ${{ github.ref }}
-          path: .cache
-
-      - name: Install Dependencies
-        run: poetry install --no-root --only docs && poetry run poe fontawesome
-        env:
-          POETRY_REPOSITORIES_MATERIAL_INSIDERS_URL: https://github.com/squidfunk/mkdocs-material-insiders
-          POETRY_HTTP_BASIC_MATERIAL_INSIDERS_USERNAME: celsiusnarhwal
-          POETRY_HTTP_BASIC_MATERIAL_INSIDERS_PASSWORD: ${{ secrets.MATERIAL_INSIDERS_TOKEN }}
-          FONTAWESOME_NPM_AUTH_TOKEN: ${{ secrets.FONTAWESOME_NPM_AUTH_TOKEN }}
-
-      - name: Build Documentation
-        run: poetry run mkdocs build
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v3
-        with:
-          path: site
-          name: site
-
   deploy:
     name: Deploy Documentation
     runs-on: ubuntu-latest
-    needs: build
     steps:
-      - name: Download Artifact
-        uses: actions/download-artifact@v3
+      - name: Set Up Git Credentials
+        uses: de-vri-es/setup-git-credentials@v2
         with:
-          name: site
-          path: site
+          credentials: https://username:${{ secrets.GH_PAT }}@github.com
 
-      - name: Deploy Documentation
-        run: npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod' || '' }}
+      - name: Checkout ${{ github.repository }}
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set Up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          version: 0.5.x
+          enable-cache: true
+
+      - name: Install Dependencies
+        run: uv sync
+
+      - name: Build Documentation
+        run: uv run mkdocs build
+        env:
+          FONTAWESOME_PKG_TOKEN: ${{ secrets.FONTAWESOME_PKG_TOKEN }}
+
+      - name: Deploy to Vercel
+        run: npx vercel --yes --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' || '' }}
+        working-directory: site
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

@@ -1,42 +1,24 @@
-[tool.poetry]
-name = "material-vercel"
+[project]
+name = "mkdocs-vercel"
 version = "1.0.0"
 description = ""
-authors = ["celsius narhwal <hello@celsiusnarhwal.dev>"]
 readme = "README.md"
+authors = [
+    { name = "celsius narhwal", email = "hello@celsiusnarhwal.dev" }
+]
+requires-python = ">=3.13"
+dependencies = [
+    "artwall",
+    "cairosvg>=2.7.1",
+    "iconoclast>=3.2.0",
+    "mkdocs-material",
+    "pillow>=11.0.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.11"
-
-[tool.poetry.group.docs.dependencies]
-poethepoet = "^0.19.0"
+[tool.uv.sources]
 mkdocs-material = { git = "https://github.com/squidfunk/mkdocs-material-insiders" }
-
-[tool.poe.tasks]
-clear = "rm -rf site .cache"
-
-[tool.poe.tasks.docs]
-shell = """
-if $vercel; then
-    mkdocs build && vercel dev --cwd site
-else
-    mkdocs serve
-fi
-"""
-
-    [[tool.poe.tasks.docs.args]]
-    name = "vercel"
-    options = ["--vercel"]
-    type = "boolean"
-    default = false
-
-[tool.poe.tasks.fontawesome]
-shell = """
-npm i --no-save @celsiusnarhwal/fontawesome
-mv node_modules/@celsiusnarhwal/fontawesome/svgs docs/.overrides/.icons/fontawesome
-rm -rf node_modules
-"""
+artwall = { git = "https://github.com/celsiusnarhwal/artwall" }
 
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"

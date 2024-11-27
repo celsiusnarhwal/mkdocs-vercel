@@ -16,31 +16,36 @@ First and foremost, you'll need to install the Vercel CLI on your own machine.
 
 === ":simple-npm: npm"
 
-    ```bash
+    ```shell
     npm i -g vercel
     ```
 
 === ":fontawesome-brands-yarn: Yarn"
 
-    ```bash
+    ```shell
     yarn global add vercel
     ```
 
 === ":simple-pnpm: pnpm"
 
-    ```bash
+    ```shell
     pnpm i -g vercel
     ```
 
+=== ":simple-bun: Bun"
+
+    ```shell
+    bun add -g vercel
+
 Connect it to your Vercel account:
 
-```bash
+```shell
 vercel login
 ```
 
 Then switch into your project's directory and link it to Vercel:
 
-```bash
+```shell
 vercel link
 ```
 
@@ -53,7 +58,7 @@ You can do this on GitHub.com or with the GitHub CLI:
 
 === ":fontawesome-brands-github: GitHub CLI"
 
-    ```bash
+    ```shell
     gh secret set VERCEL_PROJECT_ID
     gh secret set VERCEL_ORG_ID # (1)!
     ```
@@ -81,20 +86,20 @@ at a minimum:
 
 ```yaml
 --8<--
-docs/code/example.yml
+docs/.snippets/example.yml
 --8<--
 ```
 
 1.  To create a production deployment, tack on the `--prod` flag:
 
-    ```bash
+    ```shell
     npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} --prod
     ```
 
     To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
     (replacing `main` with your production branch if necessary):
 
-    ```bash
+    ```shell
     npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod'||'' }}
     ```
 
