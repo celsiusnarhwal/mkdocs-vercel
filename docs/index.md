@@ -79,7 +79,7 @@ date for your token, and click **Create**. Copy the token and set it as a reposi
 It's optional, but strongly recommended, that you put a [`vercel.json`](https://vercel.com/docs/projects/project-configuration)
 file in your `docs` folder with at least the following contents:
 
-=== ":octicons-file-code-16: docs/vercel.json"
+=== ":octicons-file-code-16: `docs/vercel.json`"
 
     ```json
     {
