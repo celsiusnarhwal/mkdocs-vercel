@@ -41,7 +41,7 @@ jobs:
           FONTAWESOME_PKG_TOKEN: ${{ secrets.FONTAWESOME_PKG_TOKEN }}
 
       - name: Deploy to Vercel
-        run: npx vercel --yes --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' || '' }}
+        run: npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' || '' }}
         working-directory: site
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
