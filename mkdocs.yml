@@ -126,3 +126,6 @@ extra:
       link: https://celsiusnarhwal.dev
       name: celsiusnarhwal.dev
   generator: false
+
+extra_css:
+  - assets/stylesheets/extra.css

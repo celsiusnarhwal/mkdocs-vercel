@@ -55,7 +55,8 @@ Inside that folder is a `project.json` file with a `projectId` property and an `
 these properties as secrets in your project's GitHub repository under the names `VERCEL_PROJECT_ID` and `VERCEL_ORG_ID`,
 respectively.
 
-You can do this on GitHub.com or with the [GitHub CLI](https://cli.github.com):
+You can do this [on GitHub.com](https://docs.github.com/en/actions/security-for-github-actions/security-guides/using-secrets-in-github-actions) 
+or with the [GitHub CLI](https://cli.github.com):
 
 === ":fontawesome-brands-github: GitHub CLI"
 
@@ -68,7 +69,7 @@ You can do this on GitHub.com or with the [GitHub CLI](https://cli.github.com):
 
 ## Getting a token
 
-You'll need to generate a Vercel token so the Vercel CLI can access your account from within GitHub Actions. Head over
+You'll need to generate a Vercel account token so the Vercel CLI can access your account from within GitHub Actions. Head over
 to your [Vercel account settings](https://vercel.com/account/tokens), choose a name, appropriate scope, and expiration
 date for your token, and click **Create**. Copy the token and set it as a repository secret under the name
 `VERCEL_TOKEN`.
@@ -89,7 +90,7 @@ file in your `docs` folder with at least the following contents:
 ??? question "Why?"
     Relative internal links on your site will break if the request URL 
     [does not have a trailing slash](https://github.com/slorber/trailing-slash-guide). This isn't a problem on MkDocs' 
-    _de facto_ standard hosting platform, GitHub Pages, which automatically enforces trailing slashes, so the 
+    _de facto_ standard hosting platform, [GitHub Pages](https://pages.github.com), which automatically enforces trailing slashes, so the 
     overwhelming majority of public MkDocs sites do not exhibit this issue. Yours will,
     though, if you deploy it on Vercel without configuring `vercel.json` to enforce trailing slashes.
 
@@ -110,14 +111,14 @@ There's no one-size-fits-all solution here, but here are some basic examples for
     
         1.  To create a production deployment, add the `--prod` flag:
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
             ```
         
             To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
             (replacing `main` with your production branch if necessary):
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
             ```
 
@@ -142,20 +143,20 @@ There's no one-size-fits-all solution here, but here are some basic examples for
     
         1.  To create a production deployment, add the `--prod` flag:
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
             ```
         
             To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
             (replacing `main` with your production branch if necessary):
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
             ```
 
         2. If you have a seperate dependency group for your documentation, you might instead do something like:
             
-            ```shell
+            ```{ .shell .no-select }
             uv sync --only group docs
             ```
 
@@ -180,20 +181,20 @@ There's no one-size-fits-all solution here, but here are some basic examples for
     
         1.  To create a production deployment, add the `--prod` flag:
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
             ```
         
             To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
             (replacing `main` with your production branch if necessary):
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
             ```
 
         2. If you have a seperate dependency group for your documentation, you might instead do something like:
             
-            ```shell
+            ```{ .shell .no-select }
             poetry install --only docs
             ```
 
@@ -219,20 +220,20 @@ There's no one-size-fits-all solution here, but here are some basic examples for
     
         1.  To create a production deployment, add the `--prod` flag:
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
             ```
         
             To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
             (replacing `main` with your production branch if necessary):
         
-            ```shell
+            ```{ .shell .no-select }
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
             ```
 
         2. If you have a seperate dependency group for your documentation, you might instead do something like:
             
-            ```shell
+            ```{ .shell .no-select }
             pdm sync --group docs
             ```
 
