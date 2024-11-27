@@ -60,6 +60,9 @@ plugins:
   - search:
       separator: '[\s\-,:!=\[\]()"`/]+|\.(?!\d)|&[lg]t;|(?!\b)(?=[A-Z][a-z])'
   - typeset
+  - privacy:
+      links_attr_map:
+        target: _blank
   - iconoclast:
       css: true
       uv: true

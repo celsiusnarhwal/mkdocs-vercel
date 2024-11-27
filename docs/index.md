@@ -10,7 +10,7 @@ This method uses [GitHub Actions](https://github.com/features/actions) to build 
 - [:simple-vercel: A Vercel account](https://vercel.com/signup)
 - [:fontawesome-brands-node-js: Node.js](https://nodejs.org)
 
-## Configuring Your Project
+## Configuring your project
 
 First and foremost, you'll need to install the Vercel CLI on your own machine.
 
@@ -36,6 +36,7 @@ First and foremost, you'll need to install the Vercel CLI on your own machine.
 
     ```shell
     bun add -g vercel
+    ```
 
 Connect it to your Vercel account:
 
@@ -54,7 +55,7 @@ Inside that folder is a `project.json` file with a `projectId` property and an `
 these properties as secrets in your project's GitHub repository under the names `VERCEL_PROJECT_ID` and `VERCEL_ORG_ID`,
 respectively.
 
-You can do this on GitHub.com or with the GitHub CLI:
+You can do this on GitHub.com or with the [GitHub CLI](https://cli.github.com):
 
 === ":fontawesome-brands-github: GitHub CLI"
 
@@ -65,45 +66,184 @@ You can do this on GitHub.com or with the GitHub CLI:
 
     1. You'll be interactively prompted for the respective secret after running each command.
 
-!!! tip "Using `vercel.json`"
-
-    You can use a [`vercel.json`](https://vercel.com/docs/concepts/projects/project-configuration) file in your
-    project by simply dropping it into the `docs` folder. MkDocs will
-    automatically include it in the build output.
-
-## Getting a Token
+## Getting a token
 
 You'll need to generate a Vercel token so the Vercel CLI can access your account from within GitHub Actions. Head over
 to your [Vercel account settings](https://vercel.com/account/tokens), choose a name, appropriate scope, and expiration
 date for your token, and click **Create**. Copy the token and set it as a repository secret under the name
 `VERCEL_TOKEN`.
 
-## Writing the Workflow
+## Configuring `vercel.json`
+
+It's optional, but strongly recommended, that you put a [`vercel.json`](https://vercel.com/docs/projects/project-configuration)
+file in your `docs` folder with at least the following contents:
+
+=== ":octicons-file-code-16: docs/vercel.json"
+
+    ```json
+    {
+      "trailingSlash": true
+    }
+    ```
+
+??? question "Why?"
+    Relative internal links on your site will break if the request URL 
+    [does not have a trailing slash](https://github.com/slorber/trailing-slash-guide). This isn't a problem on MkDocs' 
+    _de facto_ standard hosting platform, GitHub Pages, which automatically enforces trailing slashes, so the 
+    overwhelming majority of public MkDocs sites do not exhibit this issue. Yours will,
+    though, if you deploy it on Vercel without configuring `vercel.json` to enforce trailing slashes.
+
+## Writing the workflow
 
 Finally, you need to write a GitHub Actions workflow that builds your documentation and deploys it to Vercel.
-You have practically infinite flexibility in how this workflow looks, but it should probably contain the following
-at a minimum:
+There's no one-size-fits-all solution here, but here are some basic examples for commonly-used package managers.
 
-```yaml
---8<--
-docs/.snippets/example.yml
---8<--
-```
 
-1.  To create a production deployment, tack on the `--prod` flag:
+=== ":fontawesome-brands-python: pip"
 
-    ```shell
-    npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} --prod
-    ```
+    === ":octicons-file-code-16: `.github/workflows/docs.yml`"
+        ```yaml
+        --8<--
+        docs/.snippets/pip.yml
+        --8<--
+        ```
+    
+        1.  To create a production deployment, tack on the `--prod` flag:
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+            ```
+        
+            To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
+            (replacing `main` with your production branch if necessary):
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
+            ```
 
-    To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
-    (replacing `main` with your production branch if necessary):
+        2.  If you don't want the Vercel CLI to send [telemetry](https://vercel.com/docs/cli/about-telemetry),
+            you can add `#!yaml VERCEL_DISABLE_TELEMETRY: 1` to the `#!yaml env:` key:
+            
+            ```yaml
+            env:
+              VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+              VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+              VERCEL_DISABLE_TELEMETRY: 1
+            ```
 
-    ```shell
-    npx vercel --yes --cwd site --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref == 'refs/heads/main' && '--prod'||'' }}
-    ```
+=== ":simple-uv: uv"
 
-That's it. Your site will now be deployed to Vercel on every push that changes the contents of the `docs` folder,
-`mkdocs.yml`, or anything else you choose to specify in `on.push.paths`.
+    === ":octicons-file-code-16: `.github/workflows/docs.yml`"
+        ```yaml
+        --8<--
+        docs/.snippets/uv.yml
+        --8<--
+        ```
+    
+        1.  To create a production deployment, tack on the `--prod` flag:
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+            ```
+        
+            To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
+            (replacing `main` with your production branch if necessary):
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
+            ```
 
-You can check out a fully-functioning example workflow at [this website's repository](https://github.com/celsiusnarhwal/mkdocs-vercel/blob/main/.github/workflows/docs.yml).
+        2. If you have a seperate dependency group for your documentation, you might instead do something like:
+            
+            ```shell
+            uv sync --only group docs
+            ```
+
+        3.  If you don't want the Vercel CLI to send [telemetry](https://vercel.com/docs/cli/about-telemetry),
+            you can add `#!yaml VERCEL_DISABLE_TELEMETRY: 1` to the `#!yaml env:` key:
+            
+            ```yaml
+            env:
+              VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+              VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+              VERCEL_DISABLE_TELEMETRY: 1
+            ```
+
+=== ":simple-poetry: Poetry"
+
+    === ":octicons-file-code-16: `.github/workflows/docs.yml`"
+        ```yaml
+        --8<--
+        docs/.snippets/poetry.yml
+        --8<--
+        ```
+    
+        1.  To create a production deployment, tack on the `--prod` flag:
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+            ```
+        
+            To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
+            (replacing `main` with your production branch if necessary):
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
+            ```
+
+        2. If you have a seperate dependency group for your documentation, you might instead do something like:
+            
+            ```shell
+            poetry install --only docs
+            ```
+
+        3.  If you don't want the Vercel CLI to send [telemetry](https://vercel.com/docs/cli/about-telemetry),
+            you can add `#!yaml VERCEL_DISABLE_TELEMETRY: 1` to the `#!yaml env:` key:
+            
+            ```yaml
+            env:
+              VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+              VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+              VERCEL_DISABLE_TELEMETRY: 1
+            ```
+
+
+=== ":simple-pdm: PDM"
+
+    === ":octicons-file-code-16: `.github/workflows/docs.yml`"
+        ```yaml
+        --8<--
+        docs/.snippets/pdm.yml
+        --8<--
+        ```
+    
+        1.  To create a production deployment, tack on the `--prod` flag:
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
+            ```
+        
+            To emulate Vercel's branch-dependent creation of preview and production deployments, you can do something like this
+            (replacing `main` with your production branch if necessary):
+        
+            ```shell
+            npx vercel --token ${{ secrets.VERCEL_TOKEN }} ${{ github.ref_name == 'main' && '--prod' ||'' }}
+            ```
+
+        2. If you have a seperate dependency group for your documentation, you might instead do something like:
+            
+            ```shell
+            pdm sync --group docs
+            ```
+
+        3.  If you don't want the Vercel CLI to send [telemetry](https://vercel.com/docs/cli/about-telemetry),
+            you can add `#!yaml VERCEL_DISABLE_TELEMETRY: 1` to the `#!yaml env:` key:
+            
+            ```yaml
+            env:
+              VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+              VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+              VERCEL_DISABLE_TELEMETRY: 1
+            ```
+
+You can also check out the [workflow that deploys this very website](https://github.com/celsiusnarhwal/mkdocs-vercel/blob/main/.github/workflows/docs.yml).

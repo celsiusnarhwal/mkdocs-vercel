@@ -1,0 +1,38 @@
+name: Deploy Documentation
+
+on:
+  push:
+    paths:
+      - docs/**
+      - mkdocs.yml
+      - pyproject.toml
+      - .github/workflows/docs.yml
+
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy Documentation
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Python
+        uses: actions/setup-python@v5
+
+      - name: Install Poetry
+        run: pipx install poetry
+
+      - name: Install Dependencies
+        run: poetry install # (2)!
+
+      - name: Build Documentation
+        run: poetry run mkdocs build
+
+      - name: Deploy to Vercel
+        uses: npx vercel --yes --token ${{ secrets.VERCEL_TOKEN }} # (1)!
+        working-directory: site
+        env:  # (3)!
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
