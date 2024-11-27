@@ -108,7 +108,7 @@ There's no one-size-fits-all solution here, but here are some basic examples for
         --8<--
         ```
     
-        1.  To create a production deployment, tack on the `--prod` flag:
+        1.  To create a production deployment, add the `--prod` flag:
         
             ```shell
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
@@ -140,7 +140,7 @@ There's no one-size-fits-all solution here, but here are some basic examples for
         --8<--
         ```
     
-        1.  To create a production deployment, tack on the `--prod` flag:
+        1.  To create a production deployment, add the `--prod` flag:
         
             ```shell
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
@@ -178,7 +178,7 @@ There's no one-size-fits-all solution here, but here are some basic examples for
         --8<--
         ```
     
-        1.  To create a production deployment, tack on the `--prod` flag:
+        1.  To create a production deployment, add the `--prod` flag:
         
             ```shell
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
@@ -217,7 +217,7 @@ There's no one-size-fits-all solution here, but here are some basic examples for
         --8<--
         ```
     
-        1.  To create a production deployment, tack on the `--prod` flag:
+        1.  To create a production deployment, add the `--prod` flag:
         
             ```shell
             npx vercel --token ${{ secrets.VERCEL_TOKEN }} --prod
