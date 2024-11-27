@@ -157,7 +157,7 @@ There's no one-size-fits-all solution here, but here are some basic examples for
         2. If you have a seperate dependency group for your documentation, you might instead do something like:
             
             ```{ .shell .no-select }
-            uv sync --only group docs
+            uv sync --only-group docs
             ```
 
         3.  If you don't want the Vercel CLI to send [telemetry](https://vercel.com/docs/cli/about-telemetry),
